@@ -36,15 +36,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "typedocOptions": {
-      "entryPoints": ["src"],
-      "entryPointStrategy": "expand",
-      "cleanOutputDir": true,
-      "name": "Profectus",
-      "includeVersion": true,
-      "categorizeByGroup": false,
-      "readme": "none",
-      "out": "../docs/api"
-  }
+  ]
 }
