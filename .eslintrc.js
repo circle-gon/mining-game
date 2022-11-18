@@ -10,9 +10,6 @@ module.exports = {
         "@vue/eslint-config-typescript/recommended",
         "@vue/eslint-config-prettier"
     ],
-    parserOptions: {
-        ecmaVersion: 2020
-    },
     ignorePatterns: ["src/lib"],
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",

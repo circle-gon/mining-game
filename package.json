@@ -48,6 +48,6 @@
     "vue-tsc": "^1.0.9"
   },
   "engines": {
-    "node": "16.x"
+    "node": "19.x"
   }
 }
