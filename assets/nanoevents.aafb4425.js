@@ -1,1 +1,0 @@
-let i=()=>({events:{},emit(t,...s){let n=this.events[t]||[];for(let e=0,h=n.length;e<h;e++)n[e](...s)},on(t,s){var n;return(n=this.events[t])!=null&&n.push(s)||(this.events[t]=[s]),()=>{var e;this.events[t]=(e=this.events[t])==null?void 0:e.filter(h=>s!==h)}}});export{i as c};
