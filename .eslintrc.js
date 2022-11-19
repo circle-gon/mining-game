@@ -6,7 +6,7 @@ module.exports = {
         node: true
     },
     extends: [
-        "plugin:vue/vue3-essential",
+        "plugin:vue/vue3-recommended",
         "@vue/eslint-config-typescript/recommended",
         "@vue/eslint-config-prettier"
     ],
