@@ -4,25 +4,12 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import tsconfigPaths from "vite-tsconfig-paths";
 import projInfo from "./src/data/projInfo.json";
+import checker from "vite-plugin-checker";
+import vConsole from "vite-plugin-simple-vconsole";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return id
-              .toString()
-              .split("node_modules/")[1]
-              .split("/")[0]
-              .toString();
-          }
-        },
-      },
-    },
-  },
   resolve: {
     alias: {
       vue: "vue/dist/vue.esm-bundler.js",
@@ -33,6 +20,13 @@ export default defineConfig({
     vueJsx({
       // options are passed on to @vue/babel-plugin-jsx
     }),
+    checker({
+      vueTsc: true,
+      eslint: {
+        lintCommand: "eslint --ext .ts,.tsx,.vue --fix src",
+      },
+    }),
+    vConsole({ enable: true }),
     tsconfigPaths(),
     VitePWA({
       includeAssets: [

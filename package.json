@@ -14,6 +14,7 @@
   "dependencies": {
     "@fontsource/material-icons": "^4.5.4",
     "@fontsource/roboto-mono": "^4.5.8",
+    "@ivanv/vue-collapse-transition": "^1.0.2",
     "@pixi/app": "~6.3.2",
     "@pixi/constants": "~6.3.2",
     "@pixi/core": "~6.3.2",
@@ -45,7 +46,9 @@
     "prettier": "^2.7.1",
     "typescript": "~4.8.4",
     "vite": "^3.2.4",
+    "vite-plugin-checker": "^0.5.1",
     "vite-plugin-pwa": "^0.13.3",
+    "vite-plugin-simple-vconsole": "^0.1.11",
     "vite-tsconfig-paths": "^3.5.2",
     "vue-tsc": "^1.0.9"
   },
