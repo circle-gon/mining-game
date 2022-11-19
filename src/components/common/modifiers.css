@@ -1,16 +1,16 @@
 .modifier-container {
-    display: flex;
+  display: flex;
 }
 
 .modifier-container:nth-child(2n) {
-    background: var(--raised-background);
+  background: var(--raised-background);
 }
 
 .modifier-amount {
-    flex-basis: 100px;
-    flex-shrink: 0;
+  flex-basis: 100px;
+  flex-shrink: 0;
 }
 
 .modifier-description {
-    flex-grow: 1;
+  flex-grow: 1;
 }

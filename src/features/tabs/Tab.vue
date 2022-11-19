@@ -1,5 +1,5 @@
 <template>
-    <component :is="component" />
+  <component :is="component" />
 </template>
 
 <script setup lang="ts">

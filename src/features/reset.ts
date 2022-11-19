@@ -14,84 +14,87 @@ import { isRef, unref } from "vue";
 export const ResetType = Symbol("Reset");
 
 export interface ResetOptions {
-    thingsToReset: Computable<Record<string, unknown>[]>;
-    onReset?: VoidFunction;
+  thingsToReset: Computable<Record<string, unknown>[]>;
+  onReset?: VoidFunction;
 }
 
 export interface BaseReset {
-    id: string;
-    reset: VoidFunction;
-    type: typeof ResetType;
+  id: string;
+  reset: VoidFunction;
+  type: typeof ResetType;
 }
 
 export type Reset<T extends ResetOptions> = Replace<
-    T & BaseReset,
-    {
-        thingsToReset: GetComputableType<T["thingsToReset"]>;
-    }
+  T & BaseReset,
+  {
+    thingsToReset: GetComputableType<T["thingsToReset"]>;
+  }
 >;
 
 export type GenericReset = Reset<ResetOptions>;
 
 export function createReset<T extends ResetOptions>(
-    optionsFunc: OptionsFunc<T, BaseReset, GenericReset>
+  optionsFunc: OptionsFunc<T, BaseReset, GenericReset>
 ): Reset<T> {
-    return createLazyProxy(() => {
-        const reset = optionsFunc();
-        reset.id = getUniqueID("reset-");
-        reset.type = ResetType;
+  return createLazyProxy(() => {
+    const reset = optionsFunc();
+    reset.id = getUniqueID("reset-");
+    reset.type = ResetType;
 
-        reset.reset = function () {
-            const handleObject = (obj: unknown) => {
-                if (obj && typeof obj === "object") {
-                    if (PersistentState in obj) {
-                        (obj as Persistent)[PersistentState].value = (obj as Persistent)[
-                            DefaultValue
-                        ];
-                    } else if (!(obj instanceof Decimal) && !isRef(obj)) {
-                        Object.values(obj).forEach(obj =>
-                            handleObject(obj as Record<string, unknown>)
-                        );
-                    }
-                }
-            };
-            unref((reset as GenericReset).thingsToReset).forEach(handleObject);
-            globalBus.emit("reset", reset as GenericReset);
-            reset.onReset?.();
-        };
+    reset.reset = function () {
+      const handleObject = (obj: unknown) => {
+        if (obj && typeof obj === "object") {
+          if (PersistentState in obj) {
+            (obj as Persistent)[PersistentState].value = (obj as Persistent)[
+              DefaultValue
+            ];
+          } else if (!(obj instanceof Decimal) && !isRef(obj)) {
+            Object.values(obj).forEach((obj) =>
+              handleObject(obj as Record<string, unknown>)
+            );
+          }
+        }
+      };
+      unref((reset as GenericReset).thingsToReset).forEach(handleObject);
+      globalBus.emit("reset", reset as GenericReset);
+      reset.onReset?.();
+    };
 
-        processComputable(reset as T, "thingsToReset");
+    processComputable(reset as T, "thingsToReset");
 
-        return reset as unknown as Reset<T>;
-    });
+    return reset as unknown as Reset<T>;
+  });
 }
 
 const listeners: Record<string, Unsubscribe | undefined> = {};
-export function trackResetTime(layer: BaseLayer, reset: GenericReset): Persistent<Decimal> {
-    const resetTime = persistent<Decimal>(new Decimal(0));
-    globalBus.on("addLayer", layerBeingAdded => {
-        if (layer.id === layerBeingAdded.id) {
-            listeners[layer.id]?.();
-            listeners[layer.id] = layer.on("preUpdate", diff => {
-                resetTime.value = Decimal.add(resetTime.value, diff);
-            });
-        }
-    });
-    globalBus.on("reset", currentReset => {
-        if (currentReset === reset) {
-            resetTime.value = new Decimal(0);
-        }
-    });
-    return resetTime;
+export function trackResetTime(
+  layer: BaseLayer,
+  reset: GenericReset
+): Persistent<Decimal> {
+  const resetTime = persistent<Decimal>(new Decimal(0));
+  globalBus.on("addLayer", (layerBeingAdded) => {
+    if (layer.id === layerBeingAdded.id) {
+      listeners[layer.id]?.();
+      listeners[layer.id] = layer.on("preUpdate", (diff) => {
+        resetTime.value = Decimal.add(resetTime.value, diff);
+      });
+    }
+  });
+  globalBus.on("reset", (currentReset) => {
+    if (currentReset === reset) {
+      resetTime.value = new Decimal(0);
+    }
+  });
+  return resetTime;
 }
-globalBus.on("removeLayer", layer => {
-    // unsubscribe from preUpdate
-    listeners[layer.id]?.();
-    listeners[layer.id] = undefined;
+globalBus.on("removeLayer", (layer) => {
+  // unsubscribe from preUpdate
+  listeners[layer.id]?.();
+  listeners[layer.id] = undefined;
 });
 
 declare module "game/events" {
-    interface GlobalEvents {
-        reset: (reset: GenericReset) => void;
-    }
+  interface GlobalEvents {
+    reset: (reset: GenericReset) => void;
+  }
 }

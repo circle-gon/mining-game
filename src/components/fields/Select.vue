@@ -1,16 +1,18 @@
 <template>
-    <div class="field">
-        <span class="field-title" v-if="titleComponent"><component :is="titleComponent" /></span>
-        <VueNextSelect
-            :options="options"
-            v-model="value"
-            @update:model-value="onUpdate"
-            :min="1"
-            label-by="label"
-            :placeholder="placeholder"
-            :close-on-select="closeOnSelect"
-        />
-    </div>
+  <div class="field">
+    <span class="field-title" v-if="titleComponent"
+      ><component :is="titleComponent"
+    /></span>
+    <VueNextSelect
+      :options="options"
+      v-model="value"
+      @update:model-value="onUpdate"
+      :min="1"
+      label-by="label"
+      :placeholder="placeholder"
+      :close-on-select="closeOnSelect"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,70 +26,71 @@ import "vue-next-select/dist/index.css";
 export type SelectOption = { label: string; value: unknown };
 
 const props = defineProps<{
-    title?: CoercableComponent;
-    modelValue?: unknown;
-    options: SelectOption[];
-    placeholder?: string;
-    closeOnSelect?: boolean;
+  title?: CoercableComponent;
+  modelValue?: unknown;
+  options: SelectOption[];
+  placeholder?: string;
+  closeOnSelect?: boolean;
 }>();
 const emit = defineEmits<{
-    (e: "update:modelValue", value: unknown): void;
+  (e: "update:modelValue", value: unknown): void;
 }>();
 
 const titleComponent = computeOptionalComponent(toRef(props, "title"), "span");
 
 const value = ref<SelectOption | null>(
-    props.options.find(option => option.value === props.modelValue) ?? null
+  props.options.find((option) => option.value === props.modelValue) ?? null
 );
-watch(toRef(props, "modelValue"), modelValue => {
-    if (unwrapRef(value) !== modelValue) {
-        value.value = props.options.find(option => option.value === modelValue) ?? null;
-    }
+watch(toRef(props, "modelValue"), (modelValue) => {
+  if (unwrapRef(value) !== modelValue) {
+    value.value =
+      props.options.find((option) => option.value === modelValue) ?? null;
+  }
 });
 
 function onUpdate(value: SelectOption) {
-    emit("update:modelValue", value.value);
+  emit("update:modelValue", value.value);
 }
 </script>
 
 <style>
 .vue-select {
-    width: 50%;
-    border-radius: var(--border-radius);
+  width: 50%;
+  border-radius: var(--border-radius);
 }
 
 .field-buttons .vue-select {
-    width: unset;
+  width: unset;
 }
 
 .vue-select,
 .vue-dropdown {
-    border-color: var(--outline);
+  border-color: var(--outline);
 }
 
 .vue-dropdown {
-    background: var(--raised-background);
+  background: var(--raised-background);
 }
 
 .vue-dropdown-item {
-    color: var(--foreground);
+  color: var(--foreground);
 }
 
 .vue-dropdown-item,
 .vue-dropdown-item * {
-    transition-duration: 0s;
+  transition-duration: 0s;
 }
 
 .vue-dropdown-item.highlighted {
-    background-color: var(--highlighted);
+  background-color: var(--highlighted);
 }
 
 .vue-dropdown-item.selected,
 .vue-dropdown-item.highlighted.selected {
-    background-color: var(--bought);
+  background-color: var(--bought);
 }
 
 .vue-input input::placeholder {
-    color: var(--link);
+  color: var(--link);
 }
 </style>

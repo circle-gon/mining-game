@@ -1,9 +1,9 @@
 <template>
-    <div class="table">
-        <div class="col" :class="{ mergeAdjacent }">
-            <slot />
-        </div>
+  <div class="table">
+    <div class="col" :class="{ mergeAdjacent }">
+      <slot />
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">

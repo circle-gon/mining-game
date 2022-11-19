@@ -3,7 +3,10 @@
  * @hidden
  */
 import { main } from "data/projEntry";
-import { createCumulativeConversion, createPolynomialScaling } from "features/conversion";
+import {
+  createCumulativeConversion,
+  createPolynomialScaling,
+} from "features/conversion";
 import { jsx } from "features/feature";
 import { createHotkey } from "features/hotkey";
 import { createReset } from "features/reset";
@@ -18,56 +21,56 @@ import { createLayerTreeNode, createResetButton } from "../common";
 
 const id = "p";
 const layer = createLayer(id, function (this: BaseLayer) {
-    const name = "Prestige";
-    const color = "#4BDC13";
-    const points = createResource<DecimalSource>(0, "prestige points");
+  const name = "Prestige";
+  const color = "#4BDC13";
+  const points = createResource<DecimalSource>(0, "prestige points");
 
-    const conversion = createCumulativeConversion(() => ({
-        scaling: createPolynomialScaling(10, 0.5),
-        baseResource: main.points,
-        gainResource: points,
-        roundUpCost: true
-    }));
+  const conversion = createCumulativeConversion(() => ({
+    scaling: createPolynomialScaling(10, 0.5),
+    baseResource: main.points,
+    gainResource: points,
+    roundUpCost: true,
+  }));
 
-    const reset = createReset(() => ({
-        thingsToReset: (): Record<string, unknown>[] => [layer]
-    }));
+  const reset = createReset(() => ({
+    thingsToReset: (): Record<string, unknown>[] => [layer],
+  }));
 
-    const treeNode = createLayerTreeNode(() => ({
-        layerID: id,
-        color,
-        reset
-    }));
-    addTooltip(treeNode, {
-        display: createResourceTooltip(points),
-        pinnable: true
-    });
+  const treeNode = createLayerTreeNode(() => ({
+    layerID: id,
+    color,
+    reset,
+  }));
+  addTooltip(treeNode, {
+    display: createResourceTooltip(points),
+    pinnable: true,
+  });
 
-    const resetButton = createResetButton(() => ({
-        conversion,
-        tree: main.tree,
-        treeNode
-    }));
+  const resetButton = createResetButton(() => ({
+    conversion,
+    tree: main.tree,
+    treeNode,
+  }));
 
-    const hotkey = createHotkey(() => ({
-        description: "Reset for prestige points",
-        key: "p",
-        onPress: resetButton.onClick
-    }));
+  const hotkey = createHotkey(() => ({
+    description: "Reset for prestige points",
+    key: "p",
+    onPress: resetButton.onClick,
+  }));
 
-    return {
-        name,
-        color,
-        points,
-        display: jsx(() => (
-            <>
-                <MainDisplay resource={points} color={color} />
-                {render(resetButton)}
-            </>
-        )),
-        treeNode,
-        hotkey
-    };
+  return {
+    name,
+    color,
+    points,
+    display: jsx(() => (
+      <>
+        <MainDisplay resource={points} color={color} />
+        {render(resetButton)}
+      </>
+    )),
+    treeNode,
+    hotkey,
+  };
 });
 
 export default layer;

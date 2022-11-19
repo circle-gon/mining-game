@@ -43,8 +43,8 @@ export type Replace<T, S> = S & Omit<T, keyof S>;
  * Intended for making lazily evaluated objects.
  */
 export type OptionsFunc<T, R = Record<string, unknown>, S = R> = () => T &
-    Partial<R> &
-    ThisType<T & S>;
+  Partial<R> &
+  ThisType<T & S>;
 
 let id = 0;
 /**
@@ -54,17 +54,17 @@ let id = 0;
  * @param prefix A string to prepend to the id to make it more readable in the inspector tools
  */
 export function getUniqueID(prefix = "feature-"): string {
-    return prefix + id++;
+  return prefix + id++;
 }
 
 /** Enum for what the visibility of a feature or component should be */
 export enum Visibility {
-    /** The feature or component should be visible */
-    Visible,
-    /** The feature or component should not appear but still take up space */
-    Hidden,
-    /** The feature or component should not appear not take up space */
-    None
+  /** The feature or component should be visible */
+  Visible,
+  /** The feature or component should not appear but still take up space */
+  Hidden,
+  /** The feature or component should not appear not take up space */
+  None,
 }
 
 /**
@@ -72,24 +72,27 @@ export enum Visibility {
  * The function may also return empty string as empty JSX tags cause issues.
  */
 export function jsx(func: () => JSX.Element | ""): JSXFunction {
-    (func as Partial<JSXFunction>)[DoNotCache] = true;
-    return func as JSXFunction;
+  (func as Partial<JSXFunction>)[DoNotCache] = true;
+  return func as JSXFunction;
 }
 
 /** Utility function to convert a boolean value into a Visbility value */
-export function showIf(condition: boolean, otherwise = Visibility.None): Visibility {
-    return condition ? Visibility.Visible : otherwise;
+export function showIf(
+  condition: boolean,
+  otherwise = Visibility.None
+): Visibility {
+  return condition ? Visibility.Visible : otherwise;
 }
 
 /** Utility function to set a property on an object if and only if it doesn't already exist */
 export function setDefault<T, K extends keyof T>(
-    object: T,
-    key: K,
-    value: T[K]
+  object: T,
+  key: K,
+  value: T[K]
 ): asserts object is Exclude<T, K> & Required<Pick<T, K>> {
-    if (object[key] === undefined && value != undefined) {
-        object[key] = value;
-    }
+  if (object[key] === undefined && value != undefined) {
+    object[key] = value;
+  }
 }
 
 /**
@@ -97,23 +100,26 @@ export function setDefault<T, K extends keyof T>(
  * @param obj The object to traverse
  * @param types The feature types that will be searched for
  */
-export function findFeatures(obj: Record<string, unknown>, ...types: symbol[]): unknown[] {
-    const objects: unknown[] = [];
-    const handleObject = (obj: Record<string, unknown>) => {
-        Object.keys(obj).forEach(key => {
-            const value = obj[key];
-            if (value && typeof value === "object") {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                if (types.includes((value as Record<string, any>).type)) {
-                    objects.push(value);
-                } else if (!(value instanceof Decimal) && !isRef(value)) {
-                    handleObject(value as Record<string, unknown>);
-                }
-            }
-        });
-    };
-    handleObject(obj);
-    return objects;
+export function findFeatures(
+  obj: Record<string, unknown>,
+  ...types: symbol[]
+): unknown[] {
+  const objects: unknown[] = [];
+  const handleObject = (obj: Record<string, unknown>) => {
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      if (value && typeof value === "object") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (types.includes((value as Record<string, any>).type)) {
+          objects.push(value);
+        } else if (!(value instanceof Decimal) && !isRef(value)) {
+          handleObject(value as Record<string, unknown>);
+        }
+      }
+    });
+  };
+  handleObject(obj);
+  return objects;
 }
 
 /**
@@ -122,25 +128,28 @@ export function findFeatures(obj: Record<string, unknown>, ...types: symbol[]): 
  * @param obj The object to traverse
  * @param types The feature types that will be skipped over
  */
-export function excludeFeatures(obj: Record<string, unknown>, ...types: symbol[]): unknown[] {
-    const objects: unknown[] = [];
-    const handleObject = (obj: Record<string, unknown>) => {
-        Object.keys(obj).forEach(key => {
-            const value = obj[key];
-            if (value && typeof value === "object") {
-                if (
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    typeof (value as Record<string, any>).type == "symbol" &&
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    !types.includes((value as Record<string, any>).type)
-                ) {
-                    objects.push(value);
-                } else if (!(value instanceof Decimal) && !isRef(value)) {
-                    handleObject(value as Record<string, unknown>);
-                }
-            }
-        });
-    };
-    handleObject(obj);
-    return objects;
+export function excludeFeatures(
+  obj: Record<string, unknown>,
+  ...types: symbol[]
+): unknown[] {
+  const objects: unknown[] = [];
+  const handleObject = (obj: Record<string, unknown>) => {
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      if (value && typeof value === "object") {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          typeof (value as Record<string, any>).type == "symbol" &&
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          !types.includes((value as Record<string, any>).type)
+        ) {
+          objects.push(value);
+        } else if (!(value instanceof Decimal) && !isRef(value)) {
+          handleObject(value as Record<string, unknown>);
+        }
+      }
+    });
+  };
+  handleObject(obj);
+  return objects;
 }

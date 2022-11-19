@@ -1,13 +1,13 @@
 <template>
-    <div id="modal-root" :style="theme" />
-    <div class="app" :style="theme" :class="{ useHeader }">
-        <Nav v-if="useHeader" />
-        <Game />
-        <TPS v-if="unref(showTPS)" />
-        <GameOverScreen />
-        <NaNScreen />
-        <component :is="gameComponent" />
-    </div>
+  <div id="modal-root" :style="theme" />
+  <div class="app" :style="theme" :class="{ useHeader }">
+    <Nav v-if="useHeader" />
+    <Game />
+    <TPS v-if="unref(showTPS)" />
+    <GameOverScreen />
+    <NaNScreen />
+    <component :is="gameComponent" />
+  </div>
 </template>
 
 <script setup lang="tsx">
@@ -31,23 +31,23 @@ const theme = computed(() => themes[settings.theme].variables as CSSProperties);
 const showTPS = toRef(settings, "showTPS");
 
 const gameComponent = computed(() => {
-    return coerceComponent(jsx(() => <>{gameComponents.map(render)}</>));
+  return coerceComponent(jsx(() => <>{gameComponents.map(render)}</>));
 });
 </script>
 
 <style scoped>
 .app {
-    background-color: var(--background);
-    color: var(--foreground);
-    display: flex;
-    flex-flow: column;
-    min-height: 100%;
-    height: 100%;
+  background-color: var(--background);
+  color: var(--foreground);
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  height: 100%;
 }
 
 #modal-root {
-    position: absolute;
-    min-height: 100%;
-    height: 100%;
+  position: absolute;
+  min-height: 100%;
+  height: 100%;
 }
 </style>
