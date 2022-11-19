@@ -62,7 +62,7 @@ export function createLazyProxy<T extends object, S extends T>(
         Object.assign(obj, objectFunc(obj));
         calculated = true;
       }
-      return Object.getOwnPropertyDescriptor(target, key);
+      return Reflect.getOwnPropertyDescriptor(target, key);
     },
   }) as S & T;
 }

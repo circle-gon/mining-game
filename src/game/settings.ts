@@ -53,7 +53,7 @@ export const hardResetSettings = () => {
   globalBus.emit("loadSettings", settings);
   Object.assign(state, settings);
   hardReset();
-}
+};
 
 /**
  * Loads the player settings from localStorage.

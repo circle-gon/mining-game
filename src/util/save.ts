@@ -34,29 +34,32 @@ export function save(playerData?: PlayerData): string {
   return stringifiedSave;
 }
 
+export function decodeSave(save: string) {
+  if (save[0] === "{") {
+    // plaintext. No processing needed
+  } else if (save[0] === "e") {
+    // Assumed to be base64, which starts with e
+    save = decodeURIComponent(escape(atob(save)));
+  } else if (save[0] === "ᯡ") {
+    // Assumed to be lz, which starts with ᯡ
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    save = LZString.decompressFromUTF16(save)!;
+  } else {
+    throw `Unable to determine save encoding`;
+  }
+  return save;
+}
 export async function load(): Promise<void> {
   // Load global settings
   loadSettings();
 
   try {
-    let save = localStorage.getItem(settings.active);
+    const save = localStorage.getItem(settings.active);
     if (save == null) {
       await loadSave(newSave());
       return;
     }
-    if (save[0] === "{") {
-      // plaintext. No processing needed
-    } else if (save[0] === "e") {
-      // Assumed to be base64, which starts with e
-      save = decodeURIComponent(escape(atob(save)));
-    } else if (save[0] === "ᯡ") {
-      // Assumed to be lz, which starts with ᯡ
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      save = LZString.decompressFromUTF16(save)!;
-    } else {
-      throw `Unable to determine save encoding`;
-    }
-    const player = JSON.parse(save);
+    const player = JSON.parse(decodeSave(save));
     if (player.modID !== projInfo.id) {
       await loadSave(newSave());
       return;
@@ -129,4 +132,4 @@ window.onbeforeunload = () => {
 };
 export const hardReset = async () => {
   await loadSave(newSave());
-}
+};

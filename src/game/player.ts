@@ -161,5 +161,5 @@ const player = new Proxy(
   { [ProxyState]: state, [ProxyPath]: ["player"] },
   playerHandler
 ) as Player;
-export default player
-if (import.meta.env.DEV) window.player = player
+export default player;
+if (import.meta.env.DEV) window.player = player;

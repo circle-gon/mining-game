@@ -18,4 +18,4 @@ const state = shallowReactive<Transient>({
   hasNaN: false,
   NaNPath: [],
 });
-export default state
+export default state;
