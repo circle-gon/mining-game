@@ -1,5 +1,5 @@
 <template>
-  <button @click.stop="click" class="feedback" :class="{ activated, left }">
+  <button class="feedback" :class="{ activated, left }" @click.stop="click">
     <slot />
   </button>
 </template>

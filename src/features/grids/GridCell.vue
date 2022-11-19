@@ -43,13 +43,22 @@ import type { PropType } from "vue";
 import { defineComponent, toRefs, unref } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+  },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
       required: true,
     },
-    onClick: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
-    onHold: Function as PropType<VoidFunction>,
+    onClick: {
+      type: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
+      default: undefined,
+    },
+    onHold: {
+      type: Function as PropType<VoidFunction>,
+      default: undefined,
+    },
     display: {
       type: processedPropType<CoercableComponent>(Object, String, Function),
       required: true,
@@ -64,9 +73,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    Node,
   },
   setup(props) {
     const { onClick, onHold, title, display } = toRefs(props);

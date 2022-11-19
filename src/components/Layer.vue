@@ -2,13 +2,13 @@
   <div class="layer-container" :style="{ '--layer-color': unref(color) }">
     <button v-if="showGoBack" class="goBack" @click="goBack">←</button>
     <button
-      class="layer-tab minimized"
       v-if="minimized.value"
+      class="layer-tab minimized"
       @click="minimized.value = false"
     >
       <div>{{ unref(name) }}</div>
     </button>
-    <div class="layer-tab" :class="{ showGoBack }" v-else>
+    <div v-else class="layer-tab" :class="{ showGoBack }">
       <Context @update-nodes="updateNodes">
         <component :is="component" />
       </Context>

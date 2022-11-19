@@ -1,10 +1,10 @@
 <template>
   <Modal :model-value="isOpen">
-    <template v-slot:header>
+    <template #header>
       <div class="game-over-modal-header">
         <img
-          class="game-over-modal-logo"
           v-if="logo"
+          class="game-over-modal-logo"
           :src="logo"
           :alt="title"
         />
@@ -16,7 +16,7 @@
         </div>
       </div>
     </template>
-    <template v-slot:body="{ shown }">
+    <template #body="{ shown }">
       <div v-if="shown">
         <div>It took you {{ timePlayed }} to beat the game.</div>
         <br />
@@ -31,13 +31,13 @@
             {{ discordName }}
           </a>
         </div>
-        <Toggle title="Autosave" v-model="autosave" />
+        <Toggle v-model="autosave" title="Autosave" />
       </div>
     </template>
-    <template v-slot:footer>
+    <template #footer>
       <div class="game-over-footer">
-        <button @click="keepGoing" class="button">Keep Going</button>
-        <button @click="playAgain" class="button danger">Play Again</button>
+        <button class="button" @click="keepGoing">Keep Going</button>
+        <button class="button danger" @click="playAgain">Play Again</button>
       </div>
     </template>
   </Modal>

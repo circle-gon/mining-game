@@ -51,6 +51,10 @@ import type { PropType } from "vue";
 import { defineComponent, toRefs, unref } from "vue";
 
 export default defineComponent({
+  components: {
+    MarkNode,
+    Node,
+  },
   props: {
     display: processedPropType<CoercableComponent>(Object, String, Function),
     visibility: {
@@ -59,8 +63,14 @@ export default defineComponent({
     },
     style: processedPropType<StyleValue>(String, Object, Array),
     classes: processedPropType<Record<string, boolean>>(Object),
-    onClick: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
-    onHold: Function as PropType<VoidFunction>,
+    onClick: {
+      type: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
+      required: true,
+    },
+    onHold: {
+      type: Function as PropType<VoidFunction>,
+      required: true,
+    },
     color: processedPropType<string>(String),
     glowColor: processedPropType<string>(String),
     canClick: {
@@ -72,10 +82,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    MarkNode,
-    Node,
   },
   setup(props) {
     const { onClick, onHold, display } = toRefs(props);

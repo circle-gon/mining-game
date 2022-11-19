@@ -38,10 +38,10 @@ export function processComputable<T, S extends keyof ComputableKeysOf<T>>(
   [K in S]: ProcessedComputable<UnwrapComputableType<T[S]>>;
 } {
   const computable = obj[key];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (
     isFunction(computable) &&
     computable.length === 0 &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     !(computable as any)[DoNotCache]
   ) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

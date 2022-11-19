@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import Col from "components/layout/Column.vue";
 import Row from "components/layout/Row.vue";
 import type {
@@ -136,9 +137,9 @@ export function isCoercableComponent(
       return false;
     }
     return "render" in component || "component" in component;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } else if (
     typeof component === "function" &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (component as any)[DoNotCache] === true
   ) {
     return true;

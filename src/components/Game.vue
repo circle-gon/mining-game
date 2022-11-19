@@ -3,8 +3,8 @@
     <div
       v-for="(tab, index) in tabs"
       :key="index"
-      class="tab"
       :ref="`tab-${index}`"
+      class="tab"
       :style="unref(layers[tab]?.style)"
       :class="unref(layers[tab]?.classes)"
     >
@@ -16,7 +16,7 @@
           :index="index"
           :tab="() => (($refs[`tab-${index}`] as HTMLElement[] | undefined)?.[0])"
         />
-        <component :is="tab" :index="index" v-else />
+        <component :is="tab" v-else :index="index" />
       </div>
     </div>
   </div>

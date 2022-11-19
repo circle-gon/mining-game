@@ -1,12 +1,12 @@
 <template>
   <Col class="collapsible-container">
     <button
-      @click="collapsed.value = !collapsed.value"
       class="feature collapsible-toggle"
+      @click="collapsed.value = !collapsed.value"
     >
       <component :is="displayComponent" />
     </button>
-    <component v-if="!collapsed.value" :is="contentComponent" />
+    <component :is="contentComponent" v-if="!collapsed.value" />
   </Col>
 </template>
 

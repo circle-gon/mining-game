@@ -1,22 +1,22 @@
 <template>
   <Modal v-model="isOpen">
-    <template v-slot:header>
+    <template #header>
       <div class="header">
         <h2>Options</h2>
       </div>
     </template>
-    <template v-slot:body>
-      <Select title="Theme" :options="themes" v-model="theme" />
+    <template #body>
+      <Select v-model="theme" title="Theme" :options="themes" />
       <component :is="settingFieldsComponent" />
-      <Toggle title="Show TPS" v-model="showTPS" />
+      <Toggle v-model="showTPS" title="Show TPS" />
       <hr />
-      <Toggle title="Unthrottled" v-model="unthrottled" />
-      <Toggle :title="offlineProdTitle" v-model="offlineProd" />
-      <Toggle :title="autosaveTitle" v-model="autosave" />
+      <Toggle v-model="unthrottled" title="Unthrottled" />
+      <Toggle v-model="offlineProd" :title="offlineProdTitle" />
+      <Toggle v-model="autosave" :title="autosaveTitle" />
       <Toggle
         v-if="projInfo.enablePausing"
-        :title="isPausedTitle"
         v-model="isPaused"
+        :title="isPausedTitle"
       />
     </template>
   </Modal>

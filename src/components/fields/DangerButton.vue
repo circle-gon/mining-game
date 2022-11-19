@@ -1,7 +1,7 @@
 <template>
   <span class="container" :class="{ confirming: isConfirming }">
     <span v-if="isConfirming">Are you sure?</span>
-    <button @click.stop="click" class="button danger" :disabled="disabled">
+    <button class="button danger" :disabled="disabled" @click.stop="click">
       <span v-if="isConfirming">Yes</span>
       <slot v-else />
     </button>

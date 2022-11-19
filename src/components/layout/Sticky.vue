@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky" :style="{ top }" ref="element" data-v-sticky>
+  <div ref="element" class="sticky" :style="{ top }" data-v-sticky>
     <slot />
   </div>
 </template>

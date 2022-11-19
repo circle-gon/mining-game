@@ -1,12 +1,12 @@
 <template>
   <div class="field">
-    <span class="field-title" v-if="title">{{ title }}</span>
+    <span v-if="title" class="field-title">{{ title }}</span>
     <Tooltip
       :display="`${value}`"
       :class="{ fullWidth: !title }"
       :direction="Direction.Down"
     >
-      <input type="range" v-model="value" :min="min" :max="max" />
+      <input v-model="value" type="range" :min="min" :max="max" />
     </Tooltip>
   </div>
 </template>

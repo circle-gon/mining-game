@@ -8,13 +8,6 @@
       },
       unref(style) ?? [],
     ]"
-    @click="onClick"
-    @mousedown="start"
-    @mouseleave="stop"
-    @mouseup="stop"
-    @touchstart.passive="start"
-    @touchend.passive="stop"
-    @touchcancel.passive="stop"
     :class="{
       feature: true,
       clickable: true,
@@ -23,8 +16,15 @@
       small,
       ...unref(classes),
     }"
+    @click="onClick"
+    @mousedown="start"
+    @mouseleave="stop"
+    @mouseup="stop"
+    @touchstart.passive="start"
+    @touchend.passive="stop"
+    @touchcancel.passive="stop"
   >
-    <component v-if="unref(comp)" :is="unref(comp)" />
+    <component :is="unref(comp)" v-if="unref(comp)" />
     <MarkNode :mark="unref(mark)" />
     <Node :id="id" />
   </button>
@@ -48,6 +48,10 @@ import type { Component, PropType, UnwrapRef } from "vue";
 import { defineComponent, shallowRef, toRefs, unref, watchEffect } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+    MarkNode,
+  },
   props: {
     display: {
       type: processedPropType<UnwrapRef<GenericClickable["display"]>>(
@@ -63,8 +67,14 @@ export default defineComponent({
     },
     style: processedPropType<StyleValue>(Object, String, Array),
     classes: processedPropType<Record<string, boolean>>(Object),
-    onClick: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
-    onHold: Function as PropType<VoidFunction>,
+    onClick: {
+      type: Function as PropType<(e?: MouseEvent | TouchEvent) => void>,
+      required: true,
+    },
+    onHold: {
+      type: Function as PropType<VoidFunction>,
+      required: true,
+    },
     canClick: {
       type: processedPropType<boolean>(Boolean),
       required: true,
@@ -75,10 +85,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    Node,
-    MarkNode,
   },
   setup(props) {
     const { display, onClick, onHold } = toRefs(props);

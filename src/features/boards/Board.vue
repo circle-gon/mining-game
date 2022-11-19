@@ -2,6 +2,7 @@
   <panZoom
     v-if="visibility !== Visibility.None"
     v-show="visibility === Visibility.Visible"
+    ref="stage"
     :style="[
       {
         width,
@@ -17,7 +18,6 @@
       maxZoom: 10,
       zoomDoubleClickSpeed: 1,
     }"
-    ref="stage"
     @init="onInit"
     @mousemove="drag"
     @touchmove="drag"
@@ -42,15 +42,15 @@
           >
             <BoardNodeVue
               :node="node"
-              :nodeType="types[node.type]"
+              :node-type="types[node.type]"
               :dragging="draggingNode"
               :dragged="dragged"
-              :hasDragged="hasDragged"
-              :receivingNode="receivingNode?.id === node.id"
-              :selectedNode="unref(selectedNode)"
-              :selectedAction="unref(selectedAction)"
-              @mouseDown="mouseDown"
-              @endDragging="endDragging"
+              :has-dragged="hasDragged"
+              :receiving-node="receivingNode?.id === node.id"
+              :selected-node="unref(selectedNode)"
+              :selected-action="unref(selectedAction)"
+              @mouse-down="mouseDown"
+              @end-dragging="endDragging"
             />
           </g>
         </transition-group>
@@ -138,7 +138,7 @@ const receivingNode = computed(() => {
       const distanceSquared =
         Math.pow(position.x - curr.position.x, 2) +
         Math.pow(position.y - curr.position.y, 2);
-      let size = getNodeProperty(nodeType.size, curr);
+      const size = getNodeProperty(nodeType.size, curr);
       if (distanceSquared > smallestDistance || distanceSquared > size * size) {
         return smallest;
       }

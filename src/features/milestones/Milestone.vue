@@ -36,6 +36,9 @@ import type { Component, UnwrapRef } from "vue";
 import { defineComponent, shallowRef, toRefs, unref, watchEffect } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+  },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
@@ -59,9 +62,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    Node,
   },
   setup(props) {
     const { display } = toRefs(props);

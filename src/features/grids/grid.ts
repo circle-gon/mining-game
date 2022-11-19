@@ -75,10 +75,10 @@ function getGridHandler(
 
       return target[key];
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     set(
       target: Record<string | number, GridCell>,
       key: PropertyKey,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       value: any
     ) {
       console.warn("Cannot set grid cells", target, key, value);
@@ -167,10 +167,11 @@ function getCellHandler(id: string): ProxyHandler<GenericGrid> {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (target as any)[key];
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     set(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       target: Record<string, any>,
       key: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       value: any,
       receiver: typeof Proxy
     ): boolean {

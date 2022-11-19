@@ -10,6 +10,7 @@
     >
       <g id="P">
         <path
+          id="trunk"
           d="m 101,512.877 c -17.547386,-5.3519 -50.794681,-10.26296 -80,0 10.737201,-217.43031 5.7244,-300.999 0,-464.9995 0,0 46.6144,-37.1164 80,-42.00002 33.386,-4.883633 86.025,10.45942 120,50.00002 5,30 -4.353,106.6565 -44,156.0005 -34.149,42.5 -130,38.48 -130,92.999 0,102 54,208 54,208 z"
           style="
             display: inline;
@@ -19,10 +20,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="trunk"
           class="svg-elem-1"
         ></path>
         <path
+          id="vine2"
           d="M 221,55.8775 C 209.023,126.453 185.39,166.835 158.997,191.5 93.783098,252.444 11.718998,217.436 46.999998,304.877"
           style="
             display: inline;
@@ -32,10 +33,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="vine2"
           class="svg-elem-2"
         ></path>
         <path
+          id="short_vine4"
           d="m 194.5,188 c -11.225,4.447 -19.066,5.134 -35.503,3.5"
           style="
             display: inline;
@@ -45,10 +46,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="short_vine4"
           class="svg-elem-3"
         ></path>
         <path
+          id="short_vine3"
           d="M 73.499996,246.5 C 111.145,245.626 127.011,238.775 156.5,228"
           style="
             display: inline;
@@ -58,10 +59,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="short_vine3"
           class="svg-elem-4"
         ></path>
         <path
+          id="vine1"
           d="M 221,55.8775 C 169.5,17.8262 86.0943,44.9468 47,107 c -4.743,7.528 -7.1041,15.373 -8.326,24 -3.5282,24.91 2.4426,56.34 -12.0011,105.5"
           style="
             display: inline;
@@ -71,10 +72,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="vine1"
           class="svg-elem-5"
         ></path>
         <path
+          id="short_vine2"
           d="M 21,47.8775 38.674,131"
           style="
             display: inline;
@@ -84,10 +85,10 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="short_vine2"
           class="svg-elem-6"
         ></path>
         <path
+          id="short_vine1"
           d="m 3,326.5 c 13.1783,22.208 16.4863,42.834 21.6997,81"
           style="
             display: inline;
@@ -97,7 +98,6 @@
             stroke-linecap: round;
             stroke-miterlimit: 16;
           "
-          id="short_vine1"
           class="svg-elem-7"
         ></path>
       </g>

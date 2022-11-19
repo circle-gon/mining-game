@@ -1,7 +1,7 @@
 <template>
   <div
-    class="infobox"
     v-if="unref(visibility) !== Visibility.None"
+    class="infobox"
     :style="[
       {
         borderColor: unref(color),
@@ -45,6 +45,10 @@ import type { PropType, Ref, StyleValue } from "vue";
 import { computed, defineComponent, toRefs, unref } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+    CollapseTransition,
+  },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
@@ -71,10 +75,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    Node,
-    CollapseTransition,
   },
   setup(props) {
     const { title, display } = toRefs(props);

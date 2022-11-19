@@ -1,16 +1,16 @@
 <template>
   <div class="field">
-    <span class="field-title" v-if="titleComponent"
+    <span v-if="titleComponent" class="field-title"
       ><component :is="titleComponent"
     /></span>
     <VueNextSelect
-      :options="options"
       v-model="value"
-      @update:model-value="onUpdate"
+      :options="options"
       :min="1"
       label-by="label"
       :placeholder="placeholder"
       :close-on-select="closeOnSelect"
+      @update:model-value="onUpdate"
     />
   </div>
 </template>

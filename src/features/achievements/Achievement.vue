@@ -17,7 +17,7 @@
       ...unref(classes),
     }"
   >
-    <component v-if="component" :is="component" />
+    <component :is="component" v-if="component" />
     <MarkNode :mark="unref(mark)" />
     <Node :id="id" />
   </div>
@@ -34,6 +34,10 @@ import type { StyleValue } from "vue";
 import { defineComponent, toRefs, unref } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+    MarkNode,
+  },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
@@ -52,10 +56,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-  components: {
-    Node,
-    MarkNode,
   },
   setup(props) {
     const { display } = toRefs(props);

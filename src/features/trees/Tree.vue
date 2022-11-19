@@ -1,7 +1,7 @@
 <template>
   <component :is="nodesComp" />
-  <component v-if="leftNodesComp" :is="leftNodesComp" />
-  <component v-if="rightNodesComp" :is="rightNodesComp" />
+  <component :is="leftNodesComp" v-if="leftNodesComp" />
+  <component :is="rightNodesComp" v-if="rightNodesComp" />
   <Links v-if="branches" :links="unref(branches)" />
 </template>
 
@@ -20,6 +20,7 @@ import type { Component } from "vue";
 import { defineComponent, shallowRef, toRefs, unref, watchEffect } from "vue";
 
 export default defineComponent({
+  components: { Links },
   props: {
     nodes: {
       type: processedPropType<GenericTreeNode[][]>(Array),
@@ -29,7 +30,6 @@ export default defineComponent({
     rightSideNodes: processedPropType<GenericTreeNode[]>(Array),
     branches: processedPropType<TreeBranch[]>(Array),
   },
-  components: { Links },
   setup(props) {
     const { nodes, leftSideNodes, rightSideNodes } = toRefs(props);
 

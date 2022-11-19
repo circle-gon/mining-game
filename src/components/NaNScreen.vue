@@ -1,11 +1,11 @@
 <template>
   <Modal v-model="hasNaN" v-bind="$attrs">
-    <template v-slot:header>
+    <template #header>
       <div class="nan-modal-header">
         <h2>NaN value detected!</h2>
       </div>
     </template>
-    <template v-slot:body>
+    <template #body>
       <div>
         Attempted to assign "{{ path }}" to NaN<span v-if="previous">
           {{ " " }}(previously {{ format(previous) }})</span
@@ -21,30 +21,30 @@
         </a>
       </div>
       <br />
-      <Toggle title="Autosave" v-model="autosave" />
+      <Toggle v-model="autosave" title="Autosave" />
       <Toggle
         v-if="projInfo.enablePausing"
-        title="Pause game"
         v-model="isPaused"
+        title="Pause game"
       />
     </template>
-    <template v-slot:footer>
+    <template #footer>
       <div class="nan-footer">
-        <button @click="savesManager?.open()" class="button">
+        <button class="button" @click="savesManager?.open()">
           Open Saves Manager
         </button>
-        <button @click="setZero" class="button">Set to 0</button>
-        <button @click="setOne" class="button">Set to 1</button>
+        <button class="button" @click="setZero">Set to 0</button>
+        <button class="button" @click="setOne">Set to 1</button>
         <button
-          @click="hasNaN = false"
-          class="button"
           v-if="
             previous && Decimal.neq(previous, 0) && Decimal.neq(previous, 1)
           "
+          class="button"
+          @click="hasNaN = false"
         >
           Set to previous
         </button>
-        <button @click="ignore" class="button danger">Ignore</button>
+        <button class="button danger" @click="ignore">Ignore</button>
       </div>
     </template>
   </Modal>

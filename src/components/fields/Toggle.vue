@@ -1,6 +1,6 @@
 <template>
   <label class="field">
-    <input type="checkbox" class="toggle" v-model="value" />
+    <input v-model="value" type="checkbox" class="toggle" />
     <component :is="component" />
   </label>
 </template>

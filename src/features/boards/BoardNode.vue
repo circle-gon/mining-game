@@ -75,8 +75,8 @@
         />
 
         <circle
-          class="progressFill"
           v-if="progressDisplay === ProgressDisplay.Fill"
+          class="progressFill"
           :r="Math.max(size * progress - 2, 0)"
           :fill="progressColor"
         />

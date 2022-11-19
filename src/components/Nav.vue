@@ -1,15 +1,15 @@
 <template>
-  <div class="nav" v-if="useHeader" v-bind="$attrs">
+  <div v-if="useHeader" class="nav" v-bind="$attrs">
     <img v-if="banner" :src="banner" class="banner" :alt="title" />
     <div v-else class="title">{{ title }}</div>
-    <div @click="changelog?.open()" class="version-container">
+    <div class="version-container" @click="changelog?.open()">
       <Tooltip display="Changelog" :direction="Direction.Down" class="version"
         ><span>v{{ versionNumber }}</span></Tooltip
       >
     </div>
     <div style="flex-grow: 1; cursor: unset"></div>
     <div class="discord">
-      <span @click="openDiscord" class="material-icons">discord</span>
+      <span class="material-icons" @click="openDiscord">discord</span>
       <ul class="discord-links">
         <li v-if="discordLink">
           <a :href="discordLink" target="_blank">{{ discordName }}</a>
@@ -50,7 +50,7 @@
     </div>
   </div>
   <div v-else class="overlay-nav" v-bind="$attrs">
-    <div @click="changelog?.open()" class="version-container">
+    <div class="version-container" @click="changelog?.open()">
       <Tooltip
         display="Changelog"
         :direction="Direction.Right"
@@ -83,7 +83,7 @@
       </a>
     </div>
     <div class="discord">
-      <span @click="openDiscord" class="material-icons">discord</span>
+      <span class="material-icons" @click="openDiscord">discord</span>
       <ul class="discord-links">
         <li v-if="discordLink">
           <a :href="discordLink" target="_blank">{{ discordName }}</a>

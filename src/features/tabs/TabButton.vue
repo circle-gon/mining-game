@@ -1,7 +1,6 @@
 <template>
   <button
     v-if="unref(visibility) !== Visibility.None"
-    @click="selectTab"
     class="tabButton"
     :style="[
       {
@@ -15,6 +14,7 @@
       active,
       ...unref(classes),
     }"
+    @click="selectTab"
   >
     <component :is="component" />
   </button>

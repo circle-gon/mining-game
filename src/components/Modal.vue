@@ -6,10 +6,10 @@
       @after-leave="isAnimating = false"
     >
       <div
-        class="modal-mask"
         v-show="modelValue"
-        v-on:pointerdown.self="close"
+        class="modal-mask"
         v-bind="$attrs"
+        @pointerdown.self="close"
       >
         <div class="modal-wrapper">
           <div class="modal-container">

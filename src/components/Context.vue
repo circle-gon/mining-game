@@ -30,7 +30,7 @@ onMounted(() => {
   }
 });
 let isDirty = true;
-let boundingRect = ref(resizeListener.value?.getBoundingClientRect());
+const boundingRect = ref(resizeListener.value?.getBoundingClientRect());
 function updateBounds() {
   if (isDirty) {
     isDirty = false;

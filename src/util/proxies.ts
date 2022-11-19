@@ -3,9 +3,9 @@ import Decimal from "util/bignum";
 export const ProxyState = Symbol("ProxyState");
 export const ProxyPath = Symbol("ProxyPath");
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProxiedWithState<T> = NonNullable<T> extends Record<
   PropertyKey,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
 >
   ? NonNullable<T> extends Decimal

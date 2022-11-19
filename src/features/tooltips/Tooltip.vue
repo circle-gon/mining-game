@@ -7,7 +7,7 @@
     @click.capture="togglePinned"
   >
     <slot />
-    <component v-if="elementComp" :is="elementComp" />
+    <component :is="elementComp" v-if="elementComp" />
     <transition name="fade">
       <div
         v-if="isShown"
@@ -28,7 +28,7 @@
         ]"
       >
         <span v-if="showPin" class="material-icons pinned">push_pin</span>
-        <component v-if="comp" :is="comp" />
+        <component :is="comp" v-if="comp" />
       </div>
     </transition>
   </div>
@@ -54,7 +54,10 @@ import { computed, defineComponent, ref, shallowRef, toRefs, unref } from "vue";
 
 export default defineComponent({
   props: {
-    element: Object as PropType<VueFeature>,
+    element: {
+      type: Object as PropType<VueFeature>,
+      default: undefined,
+    },
     display: {
       type: processedPropType<CoercableComponent>(Object, String, Function),
       required: true,
@@ -64,7 +67,10 @@ export default defineComponent({
     direction: processedPropType<Direction>(String),
     xoffset: processedPropType<string>(String),
     yoffset: processedPropType<string>(String),
-    pinned: Object as PropType<Persistent<boolean>>,
+    pinned: {
+      type: Object as PropType<Persistent<boolean>>,
+      default: undefined,
+    },
   },
   setup(props) {
     const { element, display, pinned } = toRefs(props);

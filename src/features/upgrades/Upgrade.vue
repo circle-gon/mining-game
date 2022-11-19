@@ -8,7 +8,6 @@
       },
       unref(style) ?? {},
     ]"
-    @click="purchase"
     :class="{
       feature: true,
       upgrade: true,
@@ -18,8 +17,9 @@
       ...unref(classes),
     }"
     :disabled="!unref(canPurchase)"
+    @click="purchase"
   >
-    <component v-if="unref(component)" :is="unref(component)" />
+    <component :is="unref(component)" v-if="unref(component)" />
     <MarkNode :mark="unref(mark)" />
     <Node :id="id" />
   </button>
@@ -45,6 +45,10 @@ import type { Component, PropType, UnwrapRef } from "vue";
 import { defineComponent, shallowRef, toRefs, unref, watchEffect } from "vue";
 
 export default defineComponent({
+  components: {
+    Node,
+    MarkNode,
+  },
   props: {
     display: {
       type: processedPropType<UnwrapRef<GenericUpgrade["display"]>>(
@@ -60,7 +64,10 @@ export default defineComponent({
     },
     style: processedPropType<StyleValue>(String, Object, Array),
     classes: processedPropType<Record<string, boolean>>(Object),
-    resource: Object as PropType<Resource>,
+    resource: {
+      type: Object as PropType<Resource>,
+      required: true,
+    },
     cost: processedPropType<DecimalSource>(String, Object, Number),
     canPurchase: {
       type: processedPropType<boolean>(Boolean),
@@ -79,10 +86,6 @@ export default defineComponent({
       type: Function as PropType<VoidFunction>,
       required: true,
     },
-  },
-  components: {
-    Node,
-    MarkNode,
   },
   setup(props) {
     const { display, cost } = toRefs(props);

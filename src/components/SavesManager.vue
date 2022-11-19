@@ -1,28 +1,28 @@
 <template>
-  <Modal v-model="isOpen" ref="modal">
-    <template v-slot:header>
+  <Modal ref="modal" v-model="isOpen">
+    <template #header>
       <h2>Saves Manager</h2>
     </template>
     <template #body="{ shown }">
       <Draggable
+        v-if="shown"
         :list="settings.saves"
         handle=".handle"
-        v-if="shown"
-        :itemKey="(save: string) => save"
+        :item-key="(save: string) => save"
       >
         <template #item="{ element }">
           <Save
             :save="saves[element]"
             @open="openSave(element)"
             @export="exportSave(element)"
-            @editName="(name) => editSave(element, name)"
+            @edit-name="(name) => editSave(element, name)"
             @duplicate="duplicateSave(element)"
             @delete="deleteSave(element)"
           />
         </template>
       </Draggable>
     </template>
-    <template v-slot:footer>
+    <template #footer>
       <div class="modal-footer">
         <Text
           v-model="saveToImport"
@@ -39,11 +39,11 @@
             <Select
               v-if="Object.keys(bank).length > 0"
               :options="bank"
-              :modelValue="selectedPreset"
-              @update:modelValue="preset => newFromPreset(preset as string)"
-              closeOnSelect
+              :model-value="selectedPreset"
+              close-on-select
               placeholder="Select preset"
               class="presets"
+              @update:model-value="preset => newFromPreset(preset as string)"
             />
           </div>
         </div>
@@ -131,8 +131,8 @@ watch(saveToImport, (importedSave) => {
   }
 });
 
-let bankContext = import.meta.globEager("./../../saves/*.txt", { as: "raw" });
-let bank = ref(
+const bankContext = import.meta.globEager("./../../saves/*.txt", { as: "raw" });
+const bank = ref(
   Object.keys(bankContext).reduce(
     (acc: Array<{ label: string; value: string }>, curr) => {
       acc.push({

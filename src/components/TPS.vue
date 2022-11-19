@@ -1,5 +1,5 @@
 <template>
-  <div class="tpsDisplay" v-if="!tps.isNan()">
+  <div v-if="!tps.isNan()" class="tpsDisplay">
     TPS: {{ formatWhole(tps) }}
     <transition name="fade"
       ><span v-if="showLow" class="low">{{

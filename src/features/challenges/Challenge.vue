@@ -20,12 +20,12 @@
   >
     <button
       class="toggleChallenge"
-      @click="toggle"
       :disabled="!unref(canStart) || unref(maxed)"
+      @click="toggle"
     >
       {{ buttonText }}
     </button>
-    <component v-if="unref(comp)" :is="unref(comp)" />
+    <component :is="unref(comp)" v-if="unref(comp)" />
     <MarkNode :mark="unref(mark)" />
     <Node :id="id" />
   </div>
@@ -56,6 +56,10 @@ import {
 } from "vue";
 
 export default defineComponent({
+  components: {
+    MarkNode,
+    Node,
+  },
   props: {
     active: {
       type: processedPropType<boolean>(Boolean),
@@ -97,10 +101,6 @@ export default defineComponent({
       type: Function as PropType<VoidFunction>,
       required: true,
     },
-  },
-  components: {
-    MarkNode,
-    Node,
   },
   setup(props) {
     const { active, maxed, canComplete, display } = toRefs(props);

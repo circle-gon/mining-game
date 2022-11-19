@@ -19,7 +19,6 @@ import {
   nextTick,
   onBeforeUnmount,
   onMounted,
-  ref,
   shallowRef,
   unref,
 } from "vue";
@@ -37,8 +36,14 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    onContainerResized: Function as PropType<(rect: DOMRect) => void>,
-    onHotReload: Function as PropType<VoidFunction>,
+    onContainerResized: {
+      type: Function as PropType<(rect: DOMRect) => void>,
+      required: true,
+    },
+    onHotReload: {
+      type: Function as PropType<VoidFunction>,
+      required: true,
+    },
   },
   setup(props) {
     const app = shallowRef<null | Application>(null);

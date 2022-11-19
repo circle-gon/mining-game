@@ -1,25 +1,25 @@
 <template>
   <form @submit.prevent="submit">
     <div class="field">
-      <span class="field-title" v-if="titleComponent"
+      <span v-if="titleComponent" class="field-title"
         ><component :is="titleComponent"
       /></span>
       <VueTextareaAutosize
         v-if="textArea"
+        ref="field"
         v-model="value"
         :placeholder="placeholder"
-        :maxHeight="maxHeight"
+        :max-height="maxHeight"
         @blur="blur"
-        ref="field"
       />
       <input
         v-else
-        type="text"
+        ref="field"
         v-model="value"
+        type="text"
         :placeholder="placeholder"
         :class="{ fullWidth: !title }"
         @blur="blur"
-        ref="field"
       />
     </div>
   </form>

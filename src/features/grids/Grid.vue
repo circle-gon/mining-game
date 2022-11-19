@@ -9,9 +9,9 @@
   >
     <div
       v-for="row in unref(rows)"
+      :key="row"
       class="row"
       :class="{ mergeAdjacent }"
-      :key="row"
     >
       <GridCell
         v-for="col in unref(cols)"
@@ -33,6 +33,7 @@ import { computed, defineComponent, unref } from "vue";
 import GridCellVue from "./GridCell.vue";
 
 export default defineComponent({
+  components: { GridCell: GridCellVue },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
@@ -51,7 +52,6 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { GridCell: GridCellVue },
   setup() {
     const mergeAdjacent = computed(() => themes[settings.theme].mergeAdjacent);
 

@@ -34,7 +34,6 @@ import type {
   ProcessedComputable,
 } from "util/computed";
 import { convertComputable, processComputable } from "util/computed";
-import { createLazyProxy } from "util/proxies";
 import { renderJSX } from "util/vue";
 import type { Ref } from "vue";
 import { computed, unref } from "vue";

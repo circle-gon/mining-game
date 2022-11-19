@@ -1,8 +1,8 @@
 <template>
   <Modal v-model="isOpen">
-    <template v-slot:header>
+    <template #header>
       <div class="info-modal-header">
-        <img class="info-modal-logo" v-if="logo" :src="logo" :alt="title" />
+        <img v-if="logo" class="info-modal-logo" :src="logo" :alt="title" />
         <div class="info-modal-title">
           <h2>{{ title }}</h2>
           <h4>
@@ -12,7 +12,7 @@
         </div>
       </div>
     </template>
-    <template v-slot:body="{ shown }">
+    <template #body="{ shown }">
       <div v-if="shown">
         <div v-if="author">By {{ author }}</div>
         <div>
@@ -24,8 +24,8 @@
         <br />
         <div>
           <a
-            :href="discordLink"
             v-if="discordLink"
+            :href="discordLink"
             class="info-modal-discord-link"
           >
             <span class="material-icons info-modal-discord">discord</span>

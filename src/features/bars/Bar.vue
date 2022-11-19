@@ -61,6 +61,10 @@ import type { CSSProperties, StyleValue } from "vue";
 import { computed, defineComponent, toRefs, unref } from "vue";
 
 export default defineComponent({
+  components: {
+    MarkNode,
+    Node,
+  },
   props: {
     progress: {
       type: processedPropType<DecimalSource>(String, Object, Number),
@@ -95,15 +99,11 @@ export default defineComponent({
       required: true,
     },
   },
-  components: {
-    MarkNode,
-    Node,
-  },
   setup(props) {
     const { progress, width, height, direction, display } = toRefs(props);
 
     const normalizedProgress = computed(() => {
-      let progressNumber =
+      const progressNumber =
         progress.value instanceof Decimal
           ? progress.value.toNumber()
           : Number(progress.value);

@@ -1,30 +1,30 @@
 <template>
   <div class="save" :class="{ active: isActive }">
     <div class="handle material-icons">drag_handle</div>
-    <div class="actions" v-if="!isEditing">
+    <div v-if="!isEditing" class="actions">
       <FeedbackButton
-        @click="emit('export')"
+        v-if="save.error == undefined && !isConfirming"
         class="button"
         left
-        v-if="save.error == undefined && !isConfirming"
+        @click="emit('export')"
       >
         <Tooltip display="Export" :direction="Direction.Left" class="info">
           <span class="material-icons">content_paste</span>
         </Tooltip>
       </FeedbackButton>
       <button
-        @click="emit('duplicate')"
-        class="button"
         v-if="save.error == undefined && !isConfirming"
+        class="button"
+        @click="emit('duplicate')"
       >
         <Tooltip display="Duplicate" :direction="Direction.Left" class="info">
           <span class="material-icons">content_copy</span>
         </Tooltip>
       </button>
       <button
-        @click="isEditing = !isEditing"
-        class="button"
         v-if="save.error == undefined && !isConfirming"
+        class="button"
+        @click="isEditing = !isEditing"
       >
         <Tooltip display="Edit Name" :direction="Direction.Left" class="info">
           <span class="material-icons">edit</span>
@@ -33,26 +33,26 @@
       <DangerButton
         :disabled="isActive"
         @click="emit('delete')"
-        @confirmingChanged="(value) => (isConfirming = value)"
+        @confirming-changed="(value) => (isConfirming = value)"
       >
         <Tooltip display="Delete" :direction="Direction.Left" class="info">
           <span class="material-icons" style="margin: -2px">delete</span>
         </Tooltip>
       </DangerButton>
     </div>
-    <div class="actions" v-else>
-      <button @click="changeName" class="button">
+    <div v-else class="actions">
+      <button class="button" @click="changeName">
         <Tooltip display="Save" :direction="Direction.Left" class="info">
           <span class="material-icons">check</span>
         </Tooltip>
       </button>
-      <button @click="isEditing = !isEditing" class="button">
+      <button class="button" @click="isEditing = !isEditing">
         <Tooltip display="Cancel" :direction="Direction.Left" class="info">
           <span class="material-icons">close</span>
         </Tooltip>
       </button>
     </div>
-    <div class="details" v-if="save.error == undefined && !isEditing">
+    <div v-if="save.error == undefined && !isEditing" class="details">
       <button class="button open" @click="emit('open')">
         <h3>{{ save.name }}</h3>
       </button>
@@ -62,7 +62,7 @@
         Last played {{ dateFormat.format(currentTime) }}
       </div>
     </div>
-    <div class="details" v-else-if="save.error == undefined && isEditing">
+    <div v-else-if="save.error == undefined && isEditing" class="details">
       <Text v-model="newName" class="editname" @submit="changeName" />
     </div>
     <div v-else class="details error">

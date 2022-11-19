@@ -4,9 +4,9 @@
       v-for="(link, index) in validLinks"
       :key="index"
       :link="link"
-      :boundingRect="boundingRect"
-      :startNode="nodes[link.startNode.id]!"
-      :endNode="nodes[link.endNode.id]!"
+      :bounding-rect="boundingRect"
+      :start-node="nodes[link.startNode.id]!"
+      :end-node="nodes[link.endNode.id]!"
     />
   </svg>
   <div ref="resizeListener" class="resize-listener" />

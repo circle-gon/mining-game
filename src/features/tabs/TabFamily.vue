@@ -20,11 +20,11 @@
       <div class="tab-buttons" :class="{ floating }">
         <TabButton
           v-for="(button, id) in unref(tabs)"
-          @selectTab="selected.value = id"
-          :floating="floating"
           :key="id"
+          :floating="floating"
           :active="unref(button.tab) === unref(activeTab)"
           v-bind="gatherButtonProps(button)"
+          @select-tab="selected.value = id"
         />
       </div>
     </Sticky>
@@ -60,6 +60,10 @@ import {
 } from "vue";
 
 export default defineComponent({
+  components: {
+    Sticky,
+    TabButton,
+  },
   props: {
     visibility: {
       type: processedPropType<Visibility>(Number),
@@ -81,10 +85,6 @@ export default defineComponent({
     classes: processedPropType<Record<string, boolean>>(Object),
     buttonContainerStyle: processedPropType<StyleValue>(String, Object, Array),
     buttonContainerClasses: processedPropType<Record<string, boolean>>(Object),
-  },
-  components: {
-    Sticky,
-    TabButton,
   },
   setup(props) {
     const { activeTab } = toRefs(props);
