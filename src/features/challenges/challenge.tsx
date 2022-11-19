@@ -1,4 +1,3 @@
-import { isArray } from "@vue/shared";
 import Toggle from "components/fields/Toggle.vue";
 import ChallengeComponent from "features/challenges/Challenge.vue";
 import type {
@@ -311,7 +310,7 @@ export function createActiveChallenge(
 export function isAnyChallengeActive(
   challenges: GenericChallenge[] | Ref<GenericChallenge | undefined>
 ): Ref<boolean> {
-  if (isArray(challenges)) {
+  if (Array.isArray(challenges)) {
     challenges = createActiveChallenge(challenges);
   }
   return computed(

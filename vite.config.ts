@@ -5,7 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import tsconfigPaths from "vite-tsconfig-paths";
 import projInfo from "./src/data/projInfo.json";
 import checker from "vite-plugin-checker";
-import vConsole from "vite-plugin-simple-vconsole";
+import eruda from "vite-plugin-eruda";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,7 +26,7 @@ export default defineConfig({
         lintCommand: "eslint --ext .ts,.tsx,.vue --fix src",
       },
     }),
-    vConsole({ enable: true }),
+    eruda(),
     tsconfigPaths(),
     VitePWA({
       includeAssets: [

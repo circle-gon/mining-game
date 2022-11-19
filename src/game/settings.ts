@@ -36,23 +36,14 @@ watch(
   },
   { deep: true }
 );
-
-declare global {
-  /**
-   * Augment the window object so the settings, and hard resetting the settings, can be accessed from the console.
-   */
-  interface Window {
-    settings: Settings;
-    hardResetSettings: VoidFunction;
-  }
-}
 /**
  * The player settings object. Stores data that persists across all saves.
  * Automatically saved to localStorage whenever changed.
  */
-export default window.settings = state as Settings;
+const settings = state as Settings;
+export default settings;
 /** A function that erases all player settings, including all saves. */
-export const hardResetSettings = (window.hardResetSettings = () => {
+export const hardResetSettings = () => {
   const settings = {
     active: "",
     saves: [],
@@ -62,7 +53,7 @@ export const hardResetSettings = (window.hardResetSettings = () => {
   globalBus.emit("loadSettings", settings);
   Object.assign(state, settings);
   hardReset();
-});
+}
 
 /**
  * Loads the player settings from localStorage.

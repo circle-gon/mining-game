@@ -86,7 +86,7 @@ declare global {
     layers: Record<string, Readonly<GenericLayer> | undefined>;
   }
 }
-window.layers = layers;
+if (import.meta.env.DEV) window.layers = layers;
 
 declare module "@vue/runtime-dom" {
   /** Augment CSS Properties to allow for setting the layer color CSS variable. */

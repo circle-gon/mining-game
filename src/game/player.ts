@@ -157,7 +157,9 @@ declare global {
   }
 }
 /** The player save data object. */
-export default window.player = new Proxy(
+const player = new Proxy(
   { [ProxyState]: state, [ProxyPath]: ["player"] },
   playerHandler
 ) as Player;
+export default player
+if (import.meta.env.DEV) window.player = player

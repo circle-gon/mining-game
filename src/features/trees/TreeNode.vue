@@ -69,7 +69,8 @@ export default defineComponent({
     },
     onHold: {
       type: Function as PropType<VoidFunction>,
-      required: true,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      default: () => {},
     },
     color: processedPropType<string>(String),
     glowColor: processedPropType<string>(String),

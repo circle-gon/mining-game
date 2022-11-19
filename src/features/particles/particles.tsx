@@ -1,6 +1,6 @@
 import { Application } from "@pixi/app";
 import type { EmitterConfigV3 } from "@pixi/particle-emitter";
-import { Emitter, upgradeConfig } from "@pixi/particle-emitter";
+import { Emitter } from "@pixi/particle-emitter";
 import type {
   GenericComponent,
   OptionsFunc,
@@ -96,10 +96,3 @@ export function createParticles<T extends ParticlesOptions>(
     return particles as unknown as Particles<T>;
   });
 }
-
-declare global {
-  interface Window {
-    upgradeConfig: typeof upgradeConfig;
-  }
-}
-window.upgradeConfig = upgradeConfig;
