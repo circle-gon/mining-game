@@ -39,6 +39,7 @@ export type BuyableDisplay =
       description?: CoercableComponent;
       effectDisplay?: CoercableComponent;
       showAmount?: boolean;
+      showTitle?: boolean;
     };
 
 export interface BuyableOptions {
@@ -229,7 +230,12 @@ export function createBuyable<T extends BuyableOptions>(
             ) : null}
             {genericBuyable.cost && !genericBuyable.maxed.value ? (
               <div>
-                <br />
+                {currDisplay.title ||
+                currDisplay.description ||
+                currDisplay.showAmount ||
+                currDisplay.effectDisplay ? (
+                  <br />
+                ) : null}
                 Cost: {format(unref(genericBuyable.cost) || 0)}{" "}
                 {buyable.resource.displayName}
               </div>

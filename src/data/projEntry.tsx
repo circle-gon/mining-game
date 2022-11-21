@@ -23,7 +23,7 @@ import bitcoin from "./layers/bitcoin";
  * @hidden
  */
 export const main = createLayer("main", function (this: BaseLayer) {
-  const points = createResource<DecimalSource>(10);
+  const points = createResource<DecimalSource>(10, "bitcoins");
   const best = trackBest(points);
   const total = trackTotal(points);
 
@@ -66,8 +66,7 @@ export const main = createLayer("main", function (this: BaseLayer) {
         ) : null}
         <div>
           {Decimal.lt(points.value, "1e1000") ? <span>You have </span> : null}
-          <h2>{format(points.value)}</h2>
-          {Decimal.lt(points.value, "1e1e6") ? <span> points</span> : null}
+          <h2>{format(points.value)}</h2> bitcoins
         </div>
         {Decimal.gt(pointGain.value, 0) ? <div>({oomps.value})</div> : null}
         <Spacer />

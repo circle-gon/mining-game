@@ -133,7 +133,6 @@ export default defineComponent({
 
 <style scoped>
 .clickable {
-  min-height: 120px;
   width: 120px;
   font-size: 10px;
 }
