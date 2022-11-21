@@ -14,6 +14,7 @@ import { createLayerTreeNode } from "../common";
 import { createBuyable } from "features/buyable";
 import type { Buyable, BuyableOptions } from "features/buyable";
 import { computed, ComputedRef } from "vue";
+import Row from "components/layout/Row.vue";
 import { render } from "util/vue";
 
 const id = "bc";
@@ -26,8 +27,8 @@ const layer = createLayer(id, function (this: BaseLayer) {
     layerID: id,
     color,
   }));
-  const bitcoinMiner1: Buyable<
-    BuyableOptions & { effect: ComputedRef<DecimalSource> }
+  const basicComputer: Buyable<
+    BuyableOptions & { effect: ComputedRef<DecimalSource>; title: string }
   > = createBuyable(() => {
     return {
       cost: computed(() => {
@@ -35,16 +36,20 @@ const layer = createLayer(id, function (this: BaseLayer) {
       }),
       resource: points,
       effect: computed(() => {
-        return bitcoinMiner1.amount.value;
+        return basicComputer.amount.value;
       }),
-      display: computed(() => {
-        return {
-          title: "Basic Computer",
-          description: `Each computer gives 1 computing power per second. Currently: ${bitcoinMiner1.effect.value}`,
-        };
-      }),
+      title: "Basic Computer",
     };
   });
+
+  const computers = [basicComputer];
+
+  const desc = computers.map((i) => (
+    <tr>
+      <td>{i.title}</td>
+      <td>{1}</td>
+    </tr>
+  ));
 
   addTooltip(treeNode, {
     display: createResourceTooltip(points),
@@ -58,11 +63,11 @@ const layer = createLayer(id, function (this: BaseLayer) {
     display: jsx(() => (
       <>
         <MainDisplay resource={points} color={color} />
-        {render(bitcoinMiner1)}
+        <table>{desc}</table>
       </>
     )),
     treeNode,
-    bitcoinMiner1,
+    computers,
   };
 });
 
