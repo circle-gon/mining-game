@@ -17,7 +17,7 @@ import type { DecimalSource } from "util/bignum";
 import Decimal, { format, formatTime } from "util/bignum";
 import { render } from "util/vue";
 import { computed, toRaw } from "vue";
-import prestige from "./layers/prestige";
+import bitcoin from "./layers/bitcoin";
 
 /**
  * @hidden
@@ -41,11 +41,11 @@ export const main = createLayer("main", function (this: BaseLayer) {
   const oomps = trackOOMPS(points, pointGain);
 
   const tree = createTree(() => ({
-    nodes: [[prestige.treeNode]],
+    nodes: [[bitcoin.treeNode]],
     branches: [],
     onReset() {
       points.value =
-        toRaw(this.resettingNode.value) === toRaw(prestige.treeNode) ? 0 : 10;
+        toRaw(this.resettingNode.value) === toRaw(bitcoin.treeNode) ? 0 : 10;
       best.value = points.value;
       total.value = points.value;
     },
@@ -89,7 +89,7 @@ export const main = createLayer("main", function (this: BaseLayer) {
 export const getInitialLayers = (
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   player: Partial<PlayerData>
-): Array<GenericLayer> => [main, prestige];
+): Array<GenericLayer> => [main, bitcoin];
 
 /**
  * A computed ref whose value is true whenever the game is over.

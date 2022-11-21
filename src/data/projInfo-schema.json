@@ -86,7 +86,7 @@
     },
     "exportEncoding": {
       "type": "string",
-      "enum": ["base64", "lz", "plain"],
+      "enum": ["base64", "lz"],
       "description": "The encoding to use when exporting to the clipboard. Plain-text is fast to generate but is easiest for the player to manipulate and cheat with. Base 64 is slightly slower and the string will be longer but will offer a small barrier to people trying to cheat. LZ-String is the slowest method, but produces the smallest strings and still offers a small barrier to those trying to cheat. Some sharing platforms like pastebin may automatically delete base64 encoded text, and some sites might not support all the characters used in lz-string exports."
     }
   }

@@ -35,15 +35,12 @@ export function save(playerData?: PlayerData): string {
 }
 
 export function decodeSave(save: string) {
-  if (save[0] === "{") {
-    // plaintext. No processing needed
-  } else if (save[0] === "e") {
+  if (save[0] === "n") {
     // Assumed to be base64, which starts with e
-    save = decodeURIComponent(escape(atob(save)));
+    save = LZString.decompressFromBase64(save) as string;
   } else if (save[0] === "ᯡ") {
     // Assumed to be lz, which starts with ᯡ
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    save = LZString.decompressFromUTF16(save)!;
+    save = LZString.decompressFromUTF16(save) as string;
   } else {
     throw `Unable to determine save encoding`;
   }

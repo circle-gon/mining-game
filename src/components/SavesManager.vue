@@ -205,9 +205,7 @@ function exportSave(id: string) {
       saveToExport = LZString.compressToUTF16(saveToExport);
       break;
     case "base64":
-      saveToExport = btoa(unescape(encodeURIComponent(saveToExport)));
-      break;
-    case "plain":
+      saveToExport = LZString.compressToBase64(saveToExport);
       break;
   }
 
