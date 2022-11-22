@@ -28,8 +28,8 @@ export const BarType = Symbol("Bar");
 
 export interface BarOptions {
   visibility?: Computable<Visibility>;
-  width: Computable<number>;
-  height: Computable<number>;
+  width: Computable<string>;
+  height: Computable<string>;
   direction: Computable<Direction>;
   style?: Computable<StyleValue>;
   classes?: Computable<Record<string, boolean>>;

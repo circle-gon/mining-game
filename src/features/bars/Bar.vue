@@ -3,8 +3,8 @@
     v-if="unref(visibility) !== Visibility.None"
     :style="[
       {
-        width: unref(width) + 'px',
-        height: unref(height) + 'px',
+        width: unref(width),
+        height: unref(height),
         visibility:
           unref(visibility) === Visibility.Hidden ? 'hidden' : undefined,
       },
@@ -18,7 +18,7 @@
     <div
       class="overlayTextContainer border"
       :style="[
-        { width: unref(width) + 'px', height: unref(height) + 'px' },
+        { width: unref(width), height: unref(height) },
         unref(borderStyle) ?? {},
       ]"
     >
@@ -29,7 +29,7 @@
     <div
       class="border"
       :style="[
-        { width: unref(width) + 'px', height: unref(height) + 'px' },
+        { width: unref(width), height: unref(height) },
         unref(style) ?? {},
         unref(baseStyle) ?? {},
         unref(borderStyle) ?? {},
@@ -71,11 +71,11 @@ export default defineComponent({
       required: true,
     },
     width: {
-      type: processedPropType<number>(Number),
+      type: processedPropType<string>(String),
       required: true,
     },
     height: {
-      type: processedPropType<number>(Number),
+      type: processedPropType<string>(String),
       required: true,
     },
     direction: {
@@ -112,17 +112,15 @@ export default defineComponent({
 
     const barStyle = computed(() => {
       const barStyle: Partial<CSSProperties> = {
-        width: unwrapRef(width) + 0.5 + "px",
-        height: unwrapRef(height) + 0.5 + "px",
+        width: unwrapRef(width),
+        height: unwrapRef(height),
       };
       switch (unref(direction)) {
         case Direction.Up:
           barStyle.clipPath = `inset(${normalizedProgress.value}% 0% 0% 0%)`;
-          barStyle.width = unwrapRef(width) + 1 + "px";
           break;
         case Direction.Down:
           barStyle.clipPath = `inset(0% 0% ${normalizedProgress.value}% 0%)`;
-          barStyle.width = unwrapRef(width) + 1 + "px";
           break;
         case Direction.Right:
           barStyle.clipPath = `inset(0% ${normalizedProgress.value}% 0% 0%)`;

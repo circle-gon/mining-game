@@ -15,12 +15,14 @@ import type {
   BaseBuyable,
   GenericBuyable,
 } from "features/buyable";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import type { ComputedRef } from "vue";
 import { render } from "util/vue";
 import { createBar } from "features/bars/bar";
 import { createLazyProxy } from "util/proxies";
 import { Direction } from "util/common";
+import { globalBus } from "game/events";
+import { createResource } from "features/resources/resource";
 
 const id = "bc";
 
@@ -45,12 +47,39 @@ const layer = createLayer(id, function (this: BaseLayer) {
     color,
   }));
 
+  const problemsSolved = createResource<DecimalSource>(0);
+  const computingPower = createResource<DecimalSource>(0);
+
+  const computingPowerGain = computed(() => {
+    let power = Decimal.dZero;
+    for (const comp of computers) {
+      power = power.plus(comp.effect.value);
+    }
+    return power;
+  });
+
+  const computingPowerReq = computed(() => {
+    return Decimal.add(problemsSolved.value, 1);
+  });
+
   const progressBar = createBar(() => {
     return {
       direction: Direction.Right,
-      width: 300,
-      height: 30,
-      progress: computed(() => 0.5),
+      width: "100%",
+      height: "30px",
+      progress: computed(() =>
+        Decimal.div(computingPower.value, computingPowerReq.value)
+      ),
+      display: jsx(() => {
+        return (
+          <>
+            {format(computingPower.value)}/{format(computingPowerReq.value)}
+          </>
+        );
+      }),
+      textStyle: {
+        color: "green",
+      },
     };
   });
   const basicComputer: Buyable<ComputerBuyable> = createComputerBuyable(() => {
@@ -78,6 +107,18 @@ const layer = createLayer(id, function (this: BaseLayer) {
   });
 
   const computers = [basicComputer];
+
+  globalBus.on("update", (diff) => {
+    computingPower.value = Decimal.add(
+      computingPower.value,
+      computingPowerGain.value.mul(diff)
+    );
+
+    if (Decimal.gte(computingPower.value, computingPowerReq.value)) {
+      computingPower.value = 0;
+      problemsSolved.value = Decimal.add(problemsSolved.value, 1);
+    }
+  });
 
   return {
     name,
@@ -108,6 +149,8 @@ const layer = createLayer(id, function (this: BaseLayer) {
     treeNode,
     computers,
     progressBar,
+    problemsSolved,
+    computingPower
   };
 });
 

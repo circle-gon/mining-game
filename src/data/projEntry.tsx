@@ -3,12 +3,10 @@ import { jsx } from "features/feature";
 import {
   createResource,
   trackBest,
-  trackOOMPS,
   trackTotal,
 } from "features/resources/resource";
 import type { GenericTree } from "features/trees/tree";
 import { branchedResetPropagation, createTree } from "features/trees/tree";
-import { globalBus } from "game/events";
 import type { BaseLayer, GenericLayer } from "game/layers";
 import { createLayer } from "game/layers";
 import type { PlayerData } from "game/player";
@@ -26,19 +24,6 @@ export const main = createLayer("main", function (this: BaseLayer) {
   const points = createResource<DecimalSource>(10, "bitcoins");
   const best = trackBest(points);
   const total = trackTotal(points);
-
-  const pointGain = computed(() => {
-    // eslint-disable-next-line prefer-const
-    let gain = new Decimal(1);
-    return gain;
-  });
-  globalBus.on("update", (diff) => {
-    points.value = Decimal.add(
-      points.value,
-      Decimal.times(pointGain.value, diff)
-    );
-  });
-  const oomps = trackOOMPS(points, pointGain);
 
   const tree = createTree(() => ({
     nodes: [[bitcoin.treeNode]],
@@ -67,7 +52,6 @@ export const main = createLayer("main", function (this: BaseLayer) {
           {Decimal.lt(points.value, "1e1000") ? <span>You have </span> : null}
           <h2>{format(points.value)}</h2> bitcoins
         </div>
-        {Decimal.gt(pointGain.value, 0) ? <div>({oomps.value})</div> : null}
         <Spacer />
         {render(tree)}
       </>
@@ -75,7 +59,6 @@ export const main = createLayer("main", function (this: BaseLayer) {
     points,
     best,
     total,
-    oomps,
     tree,
   };
 });
