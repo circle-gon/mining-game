@@ -64,7 +64,6 @@ function gatherLayerProps(layer: GenericLayer) {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 .inner-tab {
   padding: 50px 10px;
   min-height: calc(100% - 100px);

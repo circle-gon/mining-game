@@ -134,6 +134,10 @@ const playerHandler: ProxyHandler<Record<PropertyKey, any>> = {
         throw "Attempted to set NaN value. See above for details";
       }
     }
+
+    if (property === "tabs") {
+      console.log("tried to set tabs")
+    }
     target[ProxyState][property] = value;
     return true;
   },

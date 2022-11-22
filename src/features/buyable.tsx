@@ -39,7 +39,6 @@ export type BuyableDisplay =
       description?: CoercableComponent;
       effectDisplay?: CoercableComponent;
       showAmount?: boolean;
-      showTitle?: boolean;
     };
 
 export interface BuyableOptions {

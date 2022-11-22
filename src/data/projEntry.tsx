@@ -54,7 +54,6 @@ export const main = createLayer("main", function (this: BaseLayer) {
 
   return {
     name: "Tree",
-    links: tree.links,
     display: jsx(() => (
       <>
         {player.devSpeed === 0 ? <div>Game Paused</div> : null}
