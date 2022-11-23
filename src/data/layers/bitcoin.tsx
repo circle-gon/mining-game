@@ -15,7 +15,7 @@ import type {
   BaseBuyable,
   GenericBuyable,
 } from "features/buyable";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import type { ComputedRef } from "vue";
 import { render } from "util/vue";
 import { createBar } from "features/bars/bar";
@@ -23,6 +23,9 @@ import { createLazyProxy } from "util/proxies";
 import { Direction } from "util/common";
 import { globalBus } from "game/events";
 import { createResource } from "features/resources/resource";
+import Resource from "features/resources/Resource.vue";
+import { createClickable } from "features/clickables/clickable";
+
 
 const id = "bc";
 
@@ -47,6 +50,7 @@ const layer = createLayer(id, function (this: BaseLayer) {
     color,
   }));
 
+  const bitcoins = createResource<DecimalSource>(0);
   const problemsSolved = createResource<DecimalSource>(0);
   const computingPower = createResource<DecimalSource>(0);
 
@@ -66,14 +70,22 @@ const layer = createLayer(id, function (this: BaseLayer) {
     return {
       direction: Direction.Right,
       width: "100%",
-      height: "30px",
+      height: "60px",
       progress: computed(() =>
         Decimal.div(computingPower.value, computingPowerReq.value)
       ),
       display: jsx(() => {
         return (
           <>
-            {format(computingPower.value)}/{format(computingPowerReq.value)}
+            {formatWhole(computingPower.value)}/
+            {formatWhole(computingPowerReq.value)} blockchain computations
+            <br />
+            {format(
+              Decimal.div(computingPower.value, computingPowerReq.value).mul(
+                100
+              )
+            )}
+            % to next blockchain
           </>
         );
       }),
@@ -82,6 +94,9 @@ const layer = createLayer(id, function (this: BaseLayer) {
       },
     };
   });
+  /*const bitcoinConvert = createClickable(() => {
+
+  })*/
   const basicComputer: Buyable<ComputerBuyable> = createComputerBuyable(() => {
     return {
       cost: computed(() => {
@@ -117,6 +132,7 @@ const layer = createLayer(id, function (this: BaseLayer) {
     if (Decimal.gte(computingPower.value, computingPowerReq.value)) {
       computingPower.value = 0;
       problemsSolved.value = Decimal.add(problemsSolved.value, 1);
+      bitcoins.value = Decimal.add(bitcoins.value, 1);
     }
   });
 
@@ -125,6 +141,11 @@ const layer = createLayer(id, function (this: BaseLayer) {
     color,
     display: jsx(() => (
       <>
+        You have <Resource color="yellow" resource={bitcoins} /> bitcoins.
+        <br />
+        Complete a blockchain to get 1 bitcoin!
+        <br />
+        You have completed {formatWhole(problemsSolved.value)} blockchains.
         {render(progressBar)}
         <table style="width: 100%;">
           {computers.map((i) => (
@@ -135,10 +156,11 @@ const layer = createLayer(id, function (this: BaseLayer) {
                 </td>
                 <td>{render(i)}</td>
                 <td>
-                  1 {i.title} gives {format(i.each.value)} computing power
+                  1 {i.title} gives +{formatWhole(i.each.value)} blockchain
+                  computations per second
                   <br />
-                  This is currently giving {format(i.effect.value)} computing
-                  power
+                  Does {formatWhole(i.effect.value)} blockchain computations per
+                  second.
                 </td>
               </tr>
             </>
@@ -150,7 +172,8 @@ const layer = createLayer(id, function (this: BaseLayer) {
     computers,
     progressBar,
     problemsSolved,
-    computingPower
+    computingPower,
+    bitcoins
   };
 });
 

@@ -21,19 +21,13 @@ import bitcoin from "./layers/bitcoin";
  * @hidden
  */
 export const main = createLayer("main", function (this: BaseLayer) {
-  const points = createResource<DecimalSource>(10, "bitcoins");
+  const points = createResource<DecimalSource>(1, "dollars");
   const best = trackBest(points);
   const total = trackTotal(points);
 
   const tree = createTree(() => ({
     nodes: [[bitcoin.treeNode]],
     branches: [],
-    onReset() {
-      points.value =
-        toRaw(this.resettingNode.value) === toRaw(bitcoin.treeNode) ? 0 : 10;
-      best.value = points.value;
-      total.value = points.value;
-    },
     resetPropagation: branchedResetPropagation,
   })) as GenericTree;
 
@@ -49,8 +43,8 @@ export const main = createLayer("main", function (this: BaseLayer) {
           <div>Offline Time: {formatTime(player.offlineTime)}</div>
         ) : null}
         <div>
-          {Decimal.lt(points.value, "1e1000") ? <span>You have </span> : null}
-          <h2>{format(points.value)}</h2> bitcoins
+          {Decimal.lt(points.value, "1e1000") ? <span>You have </span> : null}$
+          <h2>{format(points.value)}</h2>
         </div>
         <Spacer />
         {render(tree)}

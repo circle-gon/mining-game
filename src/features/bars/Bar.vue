@@ -180,7 +180,7 @@ export default defineComponent({
   position: absolute;
   background-color: var(--foreground);
   overflow: hidden;
-  margin-left: -0.5px;
+  border-radius: 7px;
   transition-duration: 0.2s;
   z-index: 2;
 }
